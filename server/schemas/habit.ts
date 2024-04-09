@@ -1,10 +1,9 @@
 import Habit from '../models/habit'
 import { GraphQLError } from 'graphql'
-import user from '../models/user'
 import type { Context } from '../utils/context'
 
 
-export const typeDesfs = `
+export const typeDefs = `
     type Habit {
         id: ID!
         name: String!
@@ -65,7 +64,7 @@ export const resolvers = {
         }
     },
     Mutation: {
-        createHabit: async (root:any, args:any, context:any) => {
+        createHabit: async (root:any, args:any, context:Context) => {
             const currentUser = context.currentUser
             if (!currentUser) {
                 throw new GraphQLError('Not authenticated', {
@@ -85,8 +84,8 @@ export const resolvers = {
                 throw new GraphQLError(error.message)
             }
 
-            user.habits = user.habits.concat(habit._id)
-            await user.save()
+            currentUser.habits = currentUser.habits.concat(habit._id)
+            await currentUser.save()
 
             return habit
         },
