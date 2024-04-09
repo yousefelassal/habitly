@@ -1,0 +1,6 @@
+query Habits {
+  allHabits {
+    id
+    name
+  }
+}

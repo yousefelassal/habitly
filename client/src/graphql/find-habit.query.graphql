@@ -1,0 +1,6 @@
+query FindHabit($findHabitId: ID!) {
+  findHabit(id: $findHabitId) {
+    id
+    name
+  }
+}
