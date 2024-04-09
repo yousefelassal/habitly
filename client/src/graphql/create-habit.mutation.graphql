@@ -1,0 +1,6 @@
+mutation CreateHabit($name: String!, $color: String!, $icon: String!) {
+  createHabit(name: $name, color: $color, icon: $icon) {
+    id
+    name
+  }
+}

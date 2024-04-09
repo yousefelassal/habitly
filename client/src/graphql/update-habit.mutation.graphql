@@ -1,0 +1,6 @@
+mutation UpdateHabit($updateHabitId: ID!, $name: String!, $color: String!, $icon: String!) {
+  updateHabit(id: $updateHabitId, name: $name, color: $color, icon: $icon) {
+    id
+    name
+  }
+}

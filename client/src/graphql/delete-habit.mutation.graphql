@@ -1,0 +1,5 @@
+mutation DeleteHabit($deleteHabitId: ID!) {
+  deleteHabit(id: $deleteHabitId) {
+    id
+  }
+}
