@@ -5,6 +5,7 @@ export interface HabitDocument extends mongoose.Document {
     description: string
     color: string
     icon: string
+    updated_at: Date
     user: mongoose.Types.ObjectId
 }
 
