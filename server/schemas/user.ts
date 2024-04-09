@@ -1,7 +1,8 @@
-import jwt from 'jsonwebtoken'
+import jwt, { Secret } from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import User from '../models/user'
 import { GraphQLError } from 'graphql'
+import type { Context } from '../utils/context'
 import 'dotenv/config'
 
 export const typeDefs = `
@@ -36,7 +37,7 @@ export const typeDefs = `
 
 export const resolvers = {
     Query: {
-        me: (root, args, context) => {
+        me: (root:any, args:any, context:Context) => {
             const currentUser = context.currentUser
             if (!currentUser) {
                 throw new GraphQLError('Not authenticated', {
@@ -49,7 +50,11 @@ export const resolvers = {
         }
     },
     Mutation: {
-        createUser: async (root, args) => {
+        createUser: async (root:any, args:{
+            name: string,
+            username: string,
+            password: string
+        }) => {
             const saltRounds = 10
             const passwordHash = await bcrypt.hash(args.password, saltRounds)
 
@@ -61,7 +66,7 @@ export const resolvers = {
 
             try {
                 await user.save()
-            } catch (error) {
+            } catch (error:any) {
                 if(error.code === 11000) {
                     throw new GraphQLError('Username is already taken', {
                         extensions: {
@@ -74,7 +79,10 @@ export const resolvers = {
 
             return user
         },
-        login: async (root, args) => {
+        login: async (root:any, args:{
+            username: string,
+            password: string
+        }) => {
             const user = await User.findOne({ username: args.username })
             const passwordCorrect = user === null
                 ? false
@@ -93,7 +101,7 @@ export const resolvers = {
                 id: user._id
             }
 
-            return { value: jwt.sign(userForToken, process.env.JWT_SECRET) }
+            return { value: jwt.sign(userForToken, process.env.JWT_SECRET as Secret) }
         }
     }
 }
