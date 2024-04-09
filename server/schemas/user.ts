@@ -4,11 +4,11 @@ import User from '../models/user'
 import { GraphQLError } from 'graphql'
 import 'dotenv/config'
 
-const typeDefs = `
+export const typeDefs = `
     type User {
         name: String!
         username: String!
-        boards: [Board!]!
+        habits: [Habit!]!
         id: ID!
     }
 
@@ -34,7 +34,7 @@ const typeDefs = `
     }
 `
 
-const resolvers = {
+export const resolvers = {
     Query: {
         me: (root, args, context) => {
             const currentUser = context.currentUser
@@ -45,7 +45,7 @@ const resolvers = {
                     }
                 })
             }
-            return currentUser.populate('boards')
+            return currentUser.populate('habits')
         }
     },
     Mutation: {
@@ -97,5 +97,3 @@ const resolvers = {
         }
     }
 }
-
-export default { typeDefs, resolvers }
