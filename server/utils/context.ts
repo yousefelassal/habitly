@@ -4,6 +4,11 @@ import User from '../models/user';
 import 'dotenv/config';
 import type { BaseContext, ContextFunction } from '@apollo/server';
 import { ExpressContextFunctionArgument } from '@apollo/server/dist/esm/express4';
+import type { UserDocument } from '../models/user';
+
+export interface Context {
+    currentUser: UserDocument
+}
 
 export const userContext: ContextFunction<
     [ExpressContextFunctionArgument],
@@ -20,3 +25,4 @@ export const userContext: ContextFunction<
 }
 
 export type UserContext = ReturnType<typeof userContext>
+
