@@ -14,7 +14,9 @@ export const userContext: ContextFunction<
             auth.substring(7), process.env.JWT_SECRET as Secret
         ) as JwtPayload
         const currentUser = await User.findById(decodedToken.id)
-        return { currentUser } as BaseContext
+        return { currentUser }
     }
-    return -1 as BaseContext;
+    return -1;
 }
+
+export type UserContext = ReturnType<typeof userContext>
