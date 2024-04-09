@@ -10,6 +10,7 @@ import { uploadRouter } from './uploadthing'
 import config from './utils/config'
 import schema from './schema'
 import { userContext } from './utils/context'
+import morgan from 'morgan'
 
 mongoose.set('strictQuery', false);
 console.log('connecting to ', config.MONGODB_URI)
@@ -24,6 +25,7 @@ const utapi = new UTApi()
 const start = async () => {
     const httpServer = http.createServer(app);
     app.use(cors());
+    app.use(morgan('dev'));
     app.get('/', (req, res) => res.send('Hello from the api'));
 
     const server = new ApolloServer({
