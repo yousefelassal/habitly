@@ -3,6 +3,8 @@ import mongoose from "mongoose"
 export interface HabitDocument extends mongoose.Document {
     name: string
     description: string
+    color: string
+    icon: string
     user: mongoose.Types.ObjectId
 }
 
@@ -13,6 +15,16 @@ const schema = new mongoose.Schema<HabitDocument>({
     },
     description: {
         type: String
+    },
+    color: {
+        type: String
+    },
+    icon: {
+        type: String
+    },
+    updated_at: {
+        type: Date,
+        default: Date.now
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,
